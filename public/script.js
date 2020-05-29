@@ -1,3 +1,3 @@
 fetch("https://teziokz-node-stuff.glitch.me/data")
-  .then(response => response.json())
+  .then(response => response.text())
   .then(data => console.log(data));
