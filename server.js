@@ -2,30 +2,25 @@
 // where your node app starts
 // we've started you off with Express (https://expressjs.com/)
 // but feel free to use whatever libraries or frameworks you'd like through `package.json`.
-const express = require("express");
-const discord = require("discord.js");
-require("dotenv").config();
 
+/**
+ * Main app setup
+ */
+const express = require("express");
 const app = express();
 const port = process.env.PORT || 3000;
 
 /**
  * Discord Bot Setup
  */
+require("dotenv").config();
 const TOKEN = process.env.TOKEN;
-const bot = new discord.Client();
-bot.commands = new discord.Collection();
-const botCommands = require("./DiscordBot/commands");
-Object.keys(botCommands).map(key => {
-  bot.commands.set(botCommands[key].name, botCommands[key]);
-});
-
-require("./DiscordBot/discordBot")(bot, TOKEN);
+require("./DiscordBot/discordBot")(TOKEN);
 
 /**
- * Main Web app setup
+ * Middleware setup
  */
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
