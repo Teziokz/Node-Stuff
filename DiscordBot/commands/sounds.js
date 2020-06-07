@@ -1,11 +1,11 @@
 const ytdl = require("ytdl-core");
+queue = [];
 
 module.exports = {
   name: "sound",
   description: "Play audio from Youtube",
   data: {
     connection: null,
-    queue: [],
   },
   execute(msg, args) {
     const voiceChannel = msg.member.voice.channel;
@@ -23,7 +23,7 @@ module.exports = {
           help(msg);
           break;
         case "play":
-          play(msg, voiceChannel, args[1]).then((result) => {
+          play(msg, args[1]).then((result) => {
             this.connection = result;
           });
           break;
@@ -39,22 +39,34 @@ module.exports = {
           break;
         case "queue":
           if (args[1]) {
-            if (args[1] === "view") {
-              viewQueue(msg);
-            } else {
-              queue(this.data.queue, msg, args[1]);
+            switch (args[1]) {
+              case "view":
+                viewQueue(msg);
+                break;
+              default:
+                addToQueue(msg, args[1]);
+                break;
             }
           } else {
             msg.reply("Please enter the url you want to queue");
           }
+          break;
+        case "skip":
+          skipQueue(msg);
+          break;
       }
     }
   },
 };
 
-async function play(msg, voiceChannel, url) {
+async function play(msg, url) {
+  const voiceChannel = msg.member.voice.channel;
   if (!url) {
-    msg.reply("No address found");
+    if (queue.length > 0) {
+      play(msg, queue.shift().url);
+    } else {
+      msg.reply("Nothing in the queue, please give a url");
+    }
   } else {
     let hasError = false;
     let voiceConnection;
@@ -74,6 +86,14 @@ async function play(msg, voiceChannel, url) {
               "There was an playback error, please make sure your Youtube url is correct"
             );
             hasError = true;
+          })
+          .on("speaking", (speaking) => {
+            if (!speaking) {
+              if (queue.length > 0) {
+                nextVideo = queue.shift();
+                play(msg, nextVideo.url);
+              }
+            }
           });
       })
       .then(() => {
@@ -114,6 +134,41 @@ function volume(msg, connection, args) {
         msg.reply("Setting volume to high");
         break;
     }
+  }
+}
+
+function addToQueue(msg, url) {
+  if (ytdl.validateURL(url)) {
+    ytdl.getBasicInfo(url).then((result) => {
+      const videoData = {
+        url: url,
+        title: result.title,
+      };
+      queue.push(videoData);
+      msg.reply(`Added ${result.title} to queue`);
+    });
+  }
+}
+
+function viewQueue(msg) {
+  if (queue.length > 0) {
+    let result = "";
+    for (let i = 0; i < queue.length; i++) {
+      result += `\n${i + 1}. ${queue[i].title}`;
+    }
+    msg.reply(result);
+  } else {
+    msg.reply("Nothing queued");
+  }
+}
+
+function skipQueue(msg) {
+  if (queue.length > 0) {
+    nextVideo = queue.shift();
+    play(msg, nextVideo.url);
+    msg.reply("skipping Queue");
+  } else {
+    msg.reply("There is nothing in the queue");
   }
 }
 

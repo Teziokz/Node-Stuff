@@ -10,7 +10,7 @@ module.exports = function (TOKEN) {
   });
 
   bot.on("message", (msg) => {
-    writeToFile(msg);
+    storeMessage(msg);
     if (msg.content[0] === "!") {
       handleCommand(msg);
     }
@@ -21,12 +21,13 @@ module.exports = function (TOKEN) {
    */
   function handleCommand(msg) {
     msg.content = msg.content.substring(1);
-    console.log(msg.content);
     const args = msg.content.split(/ +/);
     const command = args.shift().toLowerCase();
     console.info(`Called command: ${command}`);
 
     if (!bot.commands.has(command)) return;
+
+    storeCommand(msg.author.id, msg.content);
 
     try {
       bot.commands.get(command).execute(msg, args);
@@ -36,7 +37,7 @@ module.exports = function (TOKEN) {
     }
   }
 
-  function writeToFile(msg) {
+  function storeMessage(msg) {
     const message = {
       id: msg.id,
       content: msg.content,
@@ -54,10 +55,33 @@ module.exports = function (TOKEN) {
       } else {
         const jsonData = JSON.parse(data);
         jsonData.push(message);
-        console.log(jsonData);
         result = JSON.stringify(jsonData);
         fs.writeFile("DiscordBot/messageData.json", result, (error) => {
-          console.log(error);
+          if (error) {
+            console.log(error);
+          }
+        });
+      }
+    });
+  }
+
+  function storeCommand(userId, command) {
+    fs.readFile("DiscordBot/commandHistory.json", (error, data) => {
+      if (error) {
+        console.log(error);
+      } else {
+        const jsonData = JSON.parse(data);
+        if (jsonData.hasOwnProperty(userId)) {
+          jsonData[userId].push(command);
+        } else {
+          jsonData[userId] = [command];
+        }
+
+        result = JSON.stringify(jsonData);
+        fs.writeFile("DiscordBot/commandHistory.json", result, (error) => {
+          if (error) {
+            console.log(error);
+          }
         });
       }
     });
