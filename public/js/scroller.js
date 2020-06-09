@@ -5,16 +5,18 @@ let scrollHeight;
 window.addEventListener("scroll", (event) => {
   if (window.innerWidth <= 600) {
     scrollHeight = "40px";
-    navMenu.style.paddingTop = element.style.height;
-    console.log(navMenu.style.paddingTop);
   } else {
     scrollHeight = "70px";
   }
 
-  if (window.pageYOffset > 5) {
+  if (window.pageYOffset > 50) {
     setScrollState();
   } else {
     setDefaultState();
+  }
+
+  if (window.innerWidth <= 600) {
+    navMenu.style.paddingTop = element.style.height;
   }
 });
 
