@@ -1,5 +1,6 @@
 const fs = require("fs");
 const client = require("./client");
+const botStats = require("./botStats");
 
 module.exports = function (TOKEN) {
   const bot = client.getInstance();
@@ -28,6 +29,7 @@ module.exports = function (TOKEN) {
     if (!bot.commands.has(command)) return;
 
     storeCommand(msg.author.id, msg.content);
+    storeStats(command);
 
     try {
       bot.commands.get(command).execute(msg, args);
@@ -85,5 +87,13 @@ module.exports = function (TOKEN) {
         });
       }
     });
+  }
+
+  function storeStats(command) {
+    blacklist = ["sound", "poll", "joke"];
+
+    if (!blacklist.includes(command)) {
+      botStats.incrementCommandCount();
+    }
   }
 };

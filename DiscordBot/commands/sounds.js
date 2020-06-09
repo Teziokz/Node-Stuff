@@ -1,11 +1,15 @@
 const ytdl = require("ytdl-core");
-queue = [];
+const stats = require("./../botStats");
+const queue = [];
+let lastVideoTitle;
+let soundStart = 0;
 
 module.exports = {
   name: "sound",
   description: "Play audio from Youtube",
   data: {
     connection: null,
+    soundStart: 0,
   },
   execute(msg, args) {
     const voiceChannel = msg.member.voice.channel;
@@ -89,17 +93,22 @@ async function play(msg, url) {
           })
           .on("speaking", (speaking) => {
             if (!speaking) {
+              videoLength = Date.now() - soundStart;
+              console.log(videoLength);
+              stats.updateSoundStats(videoLength, lastVideoTitle);
               if (queue.length > 0) {
                 nextVideo = queue.shift();
                 play(msg, nextVideo.url);
               }
             }
           });
+        soundStart = Date.now();
       })
       .then(() => {
         if (!hasError) {
           ytdl.getBasicInfo(url).then((result) => {
             msg.reply('Playing "' + result.title + '"');
+            lastVideoTitle = result.title;
           });
         }
       })

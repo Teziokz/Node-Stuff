@@ -6,6 +6,7 @@
 /**
  * Main app setup
  */
+const fs = require("fs");
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 3000;
@@ -37,8 +38,14 @@ app.get("/", (request, response) => {
   response.sendFile(__dirname + "/views/index.html");
 });
 
-app.get("/data", (request, response) => {
-  response.send("Test Data");
+app.get("/discordBot/appData", (request, response) => {
+  fs.readFile("DiscordBot/ApplicationData.json", (data, error) => {
+    if (error) {
+      response.send(error);
+    } else {
+      response.send(data);
+    }
+  });
 });
 
 // listen for requests :)

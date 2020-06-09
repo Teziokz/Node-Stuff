@@ -1,0 +1,19 @@
+@font-face {
+  font-family: "Roboto";
+  src: "url(fonts/Roboto-Meduim.tff)";
+}
+
+@font-face {
+  font-family: "roboto-thin";
+  src: "url(fonts/Roboto-Thin.tff)";
+}
+
+@font-face {
+  font-family: "roboto-black";
+  src: "url(fonts/Roboto-Black.tff)";
+}
+
+@font-face {
+  font-family: "roboto-bold";
+  src: "url(fonts/Roboto-Bold.tff)";
+}

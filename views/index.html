@@ -10,15 +10,97 @@
 
     <title>Harry's Discord Bot</title>
     <!-- import the webpage's stylesheet -->
-    <link rel="stylesheet" href="/style.css" />
     <link rel="stylesheet" href="/reset.css" />
+    <link rel="stylesheet" href="/fonts.css" />
 
-    <!-- import the webpage's client-side javascript file -->
-    <script src="/script.js" defer></script>
+    <!-- Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="/style.css" />
   </head>
   <body>
+    <nav id="main-navigation">
+      <h1><a href="#">Harry's Discord Bot</a></h1>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#stats">Stats</a></li>
+        <li><a href="#extra">Extra</a></li>
+      </ul>
+    </nav>
     <header>
-      <h1>Harry's Discord Bot</h1>
+      <h1>HARRY'S DISCORD BOT</h1>
+      <p>Just a discord bot I'm messing around with</p>
     </header>
+    <main>
+      <div id="about" class="full-page">
+        <div class="page-title">
+          <h2>About</h2>
+        </div>
+        <div class="page-content">
+          <p>
+            This is a webpage I am creating for a discord bot I am making. It
+            will contain a link to the source code, some stats and maybe to end
+            point / UI interface stuff.
+          </p>
+          <p>At the moment the features it includes are</p>
+          <ul>
+            <li>- Tell a joke</li>
+            <li>- Play audio from youtube</li>
+            <li>- Poll creation</li>
+          </ul>
+
+          <p>Features I want to add</p>
+          <ul>
+            <li>- More dumb API integrations (e.g. reddit and twitter)</li>
+            <li>- Command Line games</li>
+            <li>- Some Machine Learning stuff (if I can figure it out)</li>
+          </ul>
+
+          <p>
+            This project started out with just messing around with Node.js, it
+            may expand further than a discord bot.
+          </p>
+        </div>
+      </div>
+
+      <div id="stats" class="full-page">
+        <div class="page-title">
+          <h2>Stats</h2>
+        </div>
+        <div class="page-flex-content">
+          <div id="stats-holder">
+            <div class="stat-container">
+              <h4>Commands executed</h4>
+              <h3 id="app-stats-command-count"></h3>
+            </div>
+
+            <div class="stat-container">
+              <h4>Jokes told</h4>
+              <h3 id="app-stats-joke-count"></h3>
+            </div>
+
+            <div class="stat-container">
+              <h4>Music played</h4>
+              <h3 id="app-stats-music-time"></h3>
+            </div>
+
+            <div class="stat-container">
+              <h4>Polls created</h4>
+              <h3 id="app-stats-poll-count"></h3>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="extra" class="full-page">
+        <h2>Extra</h2>
+      </div>
+    </main>
   </body>
+
+  <!-- import the webpage's client-side javascript file -->
+  <script src="/js/statLoader.js" defer></script>
+  <script src="/js/scroller.js" defer></script>
 </html>
