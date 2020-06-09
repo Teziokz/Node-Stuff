@@ -18,17 +18,25 @@
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;900&display=swap"
       rel="stylesheet"
     />
+    <script
+      src="https://kit.fontawesome.com/4c245c5d3a.js"
+      crossorigin="anonymous"
+    ></script>
 
     <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="/mobile-styles.css" />
   </head>
   <body>
     <nav id="main-navigation">
       <h1><a href="#">Harry's Discord Bot</a></h1>
-      <ul>
+      <ul id="nav-menu">
         <li><a href="#about">About</a></li>
         <li><a href="#stats">Stats</a></li>
         <li><a href="#extra">Extra</a></li>
       </ul>
+      <button id="hamburger-menu" onclick="toggleNavigation()">
+        <i class="fas fa-bars"></i>
+      </button>
     </nav>
     <header>
       <h1>HARRY'S DISCORD BOT</h1>
@@ -95,7 +103,10 @@
         </div>
       </div>
       <div id="extra" class="full-page">
-        <h2>Extra</h2>
+        <div class="page-title">
+          <h2>Extra</h2>
+        </div>
+        <div class="page-content"></div>
       </div>
     </main>
   </body>
@@ -103,4 +114,5 @@
   <!-- import the webpage's client-side javascript file -->
   <script src="/js/statLoader.js" defer></script>
   <script src="/js/scroller.js" defer></script>
+  <script src="/js/navigation.js" defer></script>
 </html>

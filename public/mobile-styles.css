@@ -1,0 +1,86 @@
+nav #hamburger-menu {
+  background-color: transparent;
+  color: inherit;
+  border: none;
+  margin-right: 20px;
+  display: none;
+  z-index: 9999;
+}
+
+@media only screen and (max-width: 900px) {
+  /* Change about section to fit  */
+
+  main #stats h3 {
+    font-size: 72px;
+  }
+}
+
+@media only screen and (max-width: 700px) {
+  /* Change Header section to fit  */
+  header h1 {
+    font-size: 72px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  /* Create hamburger menu */
+  header h1 {
+    font-size: 54px;
+  }
+
+  header p {
+    font-size: 18px;
+  }
+
+  nav h1 {
+    z-index: 9999;
+    margin-left: 20px;
+  }
+
+  nav #nav-menu {
+    transition-duration: 1s;
+    position: absolute;
+    display: block;
+    background-color: #85fc85;
+    color: black;
+    width: 100%;
+    margin: 0px;
+    padding-top: 50px;
+    z-index: 1;
+    top: -300px;
+  }
+
+  nav #nav-menu li {
+    margin: 0px;
+    padding: 20px;
+    border-top: 1px solid gray;
+  }
+
+  nav #hamburger-menu {
+    display: inline;
+  }
+
+  main h2 {
+    font-size: 24px;
+  }
+
+  main .page-title {
+    height: 15vh;
+  }
+
+  main .page-content {
+    height: 85vh;
+  }
+
+  main .page-flex-content {
+    height: 85vh;
+  }
+
+  main #stats h3 {
+    font-size: 36px;
+  }
+
+  main #about .page-content {
+    font-size: 16px;
+  }
+}

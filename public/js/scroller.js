@@ -1,6 +1,16 @@
 const element = document.getElementById("main-navigation");
+const navMenu = document.getElementById("nav-menu");
+let scrollHeight;
 
 window.addEventListener("scroll", (event) => {
+  if (window.innerWidth <= 600) {
+    scrollHeight = "40px";
+    navMenu.style.paddingTop = element.style.height;
+    console.log(navMenu.style.paddingTop);
+  } else {
+    scrollHeight = "70px";
+  }
+
   if (window.pageYOffset > 5) {
     setScrollState();
   } else {
@@ -11,7 +21,7 @@ window.addEventListener("scroll", (event) => {
 function setScrollState() {
   element.style.backgroundColor = "#53ff53";
   element.style.color = "#282830";
-  element.style.height = "70px";
+  element.style.height = scrollHeight;
   element.style.boxShadow = "0px 5px 5px 0px rgba(0,0,0,0.75)";
 }
 

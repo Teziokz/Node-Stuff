@@ -39,7 +39,7 @@ app.get("/", (request, response) => {
 });
 
 app.get("/discordBot/appData", (request, response) => {
-  fs.readFile(__dirname + "DiscordBot/applicationData.json", (data, error) => {
+  fs.readFile(__dirname + "/DiscordBot/applicationData.json", (data, error) => {
     if (error) {
       response.send(error);
     } else {
